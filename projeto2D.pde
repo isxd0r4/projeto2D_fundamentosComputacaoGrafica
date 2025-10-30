@@ -7,7 +7,7 @@ color papel = color(245, 245, 245);
 color detalhes = color(30, 35, 45);
 color rosaClaro = color(219, 153, 199);
 color rosaEscuro = color(147, 73, 122);
-color branco = color(245); 
+color branco = color(245);
 
 void setup() {
   size(800, 600);
@@ -90,9 +90,64 @@ void draw() {
   vertex(190, 410); 
   endShape(CLOSE);
 
-  // Rostinho
+  // === Rostinho antigo (comentado) ===
+  /*
   fill(detalhes);
   rect(337, 330, 26, 4, 2);
   rect(437, 330, 26, 4, 2);
   rect(370, 360, 60, 6, 2);
+  */
+
+  // === Novo rosto (olhos abertos mais complexos, boca centralizada) ===
+  drawFace();
+  
+  // === Botões circulares (dentro do trapézio branco) ===
+  float y = 520;
+  float diam = 50;
+  
+  drawButton(320, y, diam, "OFF");
+  drawButton(400, y, diam, "Dig");
+  drawButton(480, y, diam, "Text");
+}
+
+void drawButton(float x, float y, float d, String label) {
+  fill(rosaClaro);
+  stroke(rosaEscuro);
+  strokeWeight(2);
+  ellipse(x, y, d, d);
+  
+  fill(branco);
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text(label, x, y);
+}
+
+void drawFace() {
+  // === Olhos ===
+  noStroke();
+  // contorno do olho
+  fill(branco);
+  ellipse(350, 340, 30, 38);  // olho esquerdo
+  ellipse(450, 340, 30, 38);  // olho direito
+
+  // íris
+  fill(rosaEscuro);
+  ellipse(350, 340, 18, 24);
+  ellipse(450, 340, 18, 24);
+  
+  // pupila
+  fill(detalhes);
+  ellipse(350, 340, 10, 14);
+  ellipse(450, 340, 10, 14);
+  
+  // brilho nos olhos
+  fill(255);
+  ellipse(345, 333, 5, 5);
+  ellipse(445, 333, 5, 5);
+  
+  // === Boca (centralizada) ===
+  fill(detalhes);
+  rectMode(CENTER);
+  rect(400, 375, 60, 4, 2);
+  rectMode(CORNER);
 }
