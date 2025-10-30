@@ -16,14 +16,14 @@ void setup() {
 void draw() {
   background(azul);
   
-  // Papel
+  // === Papel ===
   fill(papel);
   stroke(220);
   strokeWeight(2);
   rect(270, 15, 260, 240, 5);
   noStroke();
 
-  // Barrinha por onde sai o papel
+  // === Barrinha por onde sai o papel ===
   fill(cinzaEscuro);
   rect(252, 233, 300, 25, 5);
   fill(cinzaClaro);
@@ -31,8 +31,19 @@ void draw() {
   fill(detalhes);
   rect(225, 230, 20, 25, 5);
   rect(555, 230, 20, 25, 5);
+  
+    // Para dar impressão de altura 
+  fill(cinzaEscuro);
+  beginShape();
+  vertex(630, 400);
+  vertex(680, 555);
+  bezierVertex(680, 585, 680, 585, 655, 585); 
+  vertex(145, 585);
+  bezierVertex(120, 585, 120, 585, 120, 555); 
+  vertex(170, 400);
+  endShape(CLOSE);
 
-  // Parte superior
+  // === Parte superior ===
   fill(roxo);
   beginShape();
   vertex(240, 270);
@@ -45,7 +56,7 @@ void draw() {
   bezierVertex(220, 305, 210, 270, 240, 270); 
   endShape(CLOSE);
 
-  // Corpo principal (onde fica o rostinho)
+  // === Corpo lilás (rostinho) ===
   fill(lilas);
   beginShape();
   vertex(220, 300);  
@@ -57,18 +68,7 @@ void draw() {
   bezierVertex(200, 300, 200, 300, 220, 300);  
   endShape(CLOSE); 
 
-  // Para dar impressão de altura 
-  fill(cinzaEscuro);
-  beginShape();
-  vertex(630, 400);
-  vertex(680, 555);
-  bezierVertex(680, 585, 680, 585, 655, 585); 
-  vertex(145, 585);
-  bezierVertex(120, 585, 120, 585, 120, 555); 
-  vertex(170, 400);
-  endShape(CLOSE);
-
-  // Base inferior
+  // === Base roxa inferior ===
   fill(roxo);
   beginShape();
   vertex(630, 400);
@@ -79,7 +79,7 @@ void draw() {
   vertex(170, 400);
   endShape(CLOSE);
 
-  // Trapézio branco para o teclado
+  // === Trapézio branco do teclado ===
   fill(branco);
   beginShape();
   vertex(610, 410); 
@@ -90,64 +90,85 @@ void draw() {
   vertex(190, 410); 
   endShape(CLOSE);
 
-  // === Rostinho antigo (comentado) ===
-  /*
-  fill(detalhes);
-  rect(337, 330, 26, 4, 2);
-  rect(437, 330, 26, 4, 2);
-  rect(370, 360, 60, 6, 2);
-  */
-
-  // === Novo rosto (olhos abertos mais complexos, boca centralizada) ===
+  // === Rostinho ===
   drawFace();
-  
-  // === Botões circulares (dentro do trapézio branco) ===
-  float y = 520;
-  float diam = 50;
-  
-  drawButton(320, y, diam, "OFF");
-  drawButton(400, y, diam, "Dig");
-  drawButton(480, y, diam, "Text");
-}
 
-void drawButton(float x, float y, float d, String label) {
-  fill(rosaClaro);
-  stroke(rosaEscuro);
-  strokeWeight(2);
-  ellipse(x, y, d, d);
-  
-  fill(branco);
-  textAlign(CENTER, CENTER);
-  textSize(16);
-  text(label, x, y);
+  // === Caixinha externa com botões ===
+  drawControlBox();
 }
 
 void drawFace() {
   // === Olhos ===
   noStroke();
-  // contorno do olho
   fill(branco);
-  ellipse(350, 340, 30, 38);  // olho esquerdo
-  ellipse(450, 340, 30, 38);  // olho direito
-
-  // íris
+  ellipse(350, 340, 30, 38);
+  ellipse(450, 340, 30, 38);
+  
   fill(rosaEscuro);
   ellipse(350, 340, 18, 24);
   ellipse(450, 340, 18, 24);
   
-  // pupila
   fill(detalhes);
   ellipse(350, 340, 10, 14);
   ellipse(450, 340, 10, 14);
   
-  // brilho nos olhos
   fill(255);
   ellipse(345, 333, 5, 5);
   ellipse(445, 333, 5, 5);
   
-  // === Boca (centralizada) ===
+  // === Boca ===
   fill(detalhes);
   rectMode(CENTER);
   rect(400, 375, 60, 4, 2);
   rectMode(CORNER);
+}
+
+
+void drawControlBox() {
+  // Posição e tamanho da caixa (parte inferior na metade da tela)
+  float x = 670;
+  float y = 120;
+  float w = 90;
+  float h = 180;
+
+  // === Fio conectando à parte traseira da máquina ===
+  stroke(detalhes);
+  strokeWeight(4);
+  noFill();
+  // Ajuste da curva do fio para acompanhar a nova posição
+  bezier(616, 351, 640, 360, 650, 280, x, y + h *0.8);
+
+  // === Sombra ===
+  noStroke();
+  fill(0, 40);
+  rect(x + 5, y + 5, w, h, 15);
+
+  // === Caixa ===
+  fill(roxo);
+  rect(x, y, w, h, 15);
+
+  // === Botões centralizados verticalmente ===
+  float cx = x + w / 2;
+  float cyStart = y + h / 2 - 55; // começa acima do meio
+  float diam = 40;
+  float spacing = 55;
+
+  drawButton(cx, cyStart, diam, "OFF");
+  drawButton(cx, cyStart + spacing, diam, "Dig");
+  drawButton(cx, cyStart + 2 * spacing, diam, "Text");
+}
+
+
+
+void drawButton(float x, float y, float d, String label) {
+  fill(lilas);
+  stroke(cinzaEscuro);
+  strokeWeight(2);
+  ellipse(x, y, d, d);
+  
+  fill(azul);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  text(label, x, y);
 }
