@@ -16,14 +16,14 @@ void setup() {
 void draw() {
   background(azul);
   
-  // === Papel ===
+  //Papel
   fill(papel);
   stroke(220);
   strokeWeight(2);
   rect(270, 15, 260, 240, 5);
   noStroke();
 
-  // === Barrinha por onde sai o papel ===
+  //Rolo de saida do papel
   fill(cinzaEscuro);
   rect(252, 233, 300, 25, 5);
   fill(cinzaClaro);
@@ -32,7 +32,7 @@ void draw() {
   rect(225, 230, 20, 25, 5);
   rect(555, 230, 20, 25, 5);
   
-    // Para dar impressão de altura 
+  //Impressão de altura 
   fill(cinzaEscuro);
   beginShape();
   vertex(630, 400);
@@ -43,7 +43,7 @@ void draw() {
   vertex(170, 400);
   endShape(CLOSE);
 
-  // === Parte superior ===
+  //Parte superior 
   fill(roxo);
   beginShape();
   vertex(240, 270);
@@ -56,7 +56,7 @@ void draw() {
   bezierVertex(220, 305, 210, 270, 240, 270); 
   endShape(CLOSE);
 
-  // === Corpo lilás (rostinho) ===
+  //Corpo do rosto
   fill(lilas);
   beginShape();
   vertex(220, 300);  
@@ -68,7 +68,7 @@ void draw() {
   bezierVertex(200, 300, 200, 300, 220, 300);  
   endShape(CLOSE); 
 
-  // === Base roxa inferior ===
+  //Base roxa
   fill(roxo);
   beginShape();
   vertex(630, 400);
@@ -79,7 +79,7 @@ void draw() {
   vertex(170, 400);
   endShape(CLOSE);
 
-  // === Trapézio branco do teclado ===
+  //Trapézio branco
   fill(branco);
   beginShape();
   vertex(610, 410); 
@@ -90,15 +90,15 @@ void draw() {
   vertex(190, 410); 
   endShape(CLOSE);
 
-  // === Rostinho ===
+  //Rosto
   drawFace();
 
-  // === Caixinha externa com botões ===
+  //Caixa de controle
   drawControlBox();
 }
 
 void drawFace() {
-  // === Olhos ===
+  //Olhos
   noStroke();
   fill(branco);
   ellipse(350, 340, 30, 38);
@@ -116,7 +116,7 @@ void drawFace() {
   ellipse(345, 333, 5, 5);
   ellipse(445, 333, 5, 5);
   
-  // === Boca ===
+  //Boca
   fill(detalhes);
   rectMode(CENTER);
   rect(400, 375, 60, 4, 2);
@@ -125,48 +125,37 @@ void drawFace() {
 
 
 void drawControlBox() {
-  // Posição e tamanho da caixa (parte inferior na metade da tela)
-  float x = 670;
-  float y = 120;
-  float w = 90;
-  float h = 180;
 
-  // === Fio conectando à parte traseira da máquina ===
+  //Fio
   stroke(detalhes);
   strokeWeight(4);
   noFill();
-  // Ajuste da curva do fio para acompanhar a nova posição
-  bezier(616, 351, 640, 360, 650, 280, x, y + h *0.8);
+  bezier(616, 351, 640, 360, 650, 280, 670, 264);
 
-  // === Sombra ===
+  //Sombra
   noStroke();
   fill(0, 40);
-  rect(x + 5, y + 5, w, h, 15);
+  rect(675, 125, 90, 180, 15);
 
-  // === Caixa ===
+  //Caixa
   fill(roxo);
-  rect(x, y, w, h, 15);
+  rect(670, 120, 90, 180, 15);
 
-  // === Botões centralizados verticalmente ===
-  float cx = x + w / 2;
-  float cyStart = y + h / 2 - 55; // começa acima do meio
-  float diam = 40;
-  float spacing = 55;
 
-  drawButton(cx, cyStart, diam, "OFF");
-  drawButton(cx, cyStart + spacing, diam, "Dig");
-  drawButton(cx, cyStart + 2 * spacing, diam, "Text");
+  drawButton(715, 155, 40, "OFF");
+  drawButton(715, 210, 40, "D");
+  drawButton(715, 265, 40, "T");
 }
 
 
 
 void drawButton(float x, float y, float d, String label) {
-  fill(lilas);
+  fill(cinzaClaro);
   stroke(cinzaEscuro);
   strokeWeight(2);
   ellipse(x, y, d, d);
   
-  fill(azul);
+  fill(branco);
   noStroke();
   textAlign(CENTER, CENTER);
   textSize(14);
