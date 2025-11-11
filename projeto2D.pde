@@ -8,17 +8,20 @@ color detalhes = color(30, 35, 45);
 color rosaClaro = color(219, 153, 199);
 color rosaEscuro = color(147, 73, 122);
 color branco = color(245);
+color brancoTeclado = color(230);
+color cinzaBotao = color(70,77,104);
 
- // Segunda linha (letras aleatórias, incluindo um W)
+ 
   char[] letters = new char[10];
   boolean hasW = false;
   boolean ligado = false;
   boolean modoDig = false;
+  boolean modoText = false;
   
   boolean teclaPressionada = false;
 int teclaAtiva = -1;
 
-// === Configuração do teclado ===
+//Configuração do teclado
 String[] linha1 = { "0","1","2","3","4","5","6","7","8","9" };
 String[] linha2 = { "Q","E","T","W","A","S","D","F","G","H" };
   
@@ -155,7 +158,7 @@ void drawFace() {
 }*/
 
 void drawFace() {
-  // === Olhos ===
+  // Olhos
   noStroke();
   fill(branco);
   ellipse(350, 340, 30, 38);
@@ -179,11 +182,11 @@ void drawFace() {
   fill(150, 0, 0); // vermelho escuro
   beginShape();
   vertex(370, 370);
-  bezierVertex(380, 400, 420, 400, 430, 370); // curva inferior
-  bezierVertex(430, 355, 370, 355, 370, 370); // curva superior
+  bezierVertex(380, 400, 420, 400, 430, 370); 
+  bezierVertex(430, 355, 370, 355, 370, 370); 
   endShape(CLOSE);
 
-  // Dentes (parte branca superior interna)
+  // Dentes
   noStroke();
   fill(255);
   beginShape();
@@ -192,7 +195,7 @@ void drawFace() {
   bezierVertex(428, 368, 372, 368, 372, 370);
   endShape(CLOSE);
 
-  // Língua (parte inferior interna)
+  // Língua
   fill(255, 100, 120);
   beginShape();
   vertex(378, 383);
@@ -231,12 +234,12 @@ void drawControlBox() {
  // === Botão ON/OFF ===
   drawPowerButton(715, 155, 40);
   drawDigButton(715, 210, 40);
-  drawButton(715, 265, 40, "T");
+  drawTextButton(715, 265, 40);
 }
 
 void drawPowerButton(float x, float y, float d) {
   if (ligado) {
-    fill(rosaEscuro); // cor quando ligado
+    fill(cinzaEscuro); // cor quando ligado
   } else {
     fill(cinzaClaro); // cor quando desligado
   }
@@ -277,16 +280,32 @@ void drawDigButton(float x, float y, float d) {
   noStroke();
   textAlign(CENTER, CENTER);
   textSize(14);
-  text(modoDig ? "DIG" : "D", x, y);
+  text("D", x, y);
+}
+
+
+void drawTextButton(float x, float y, float d) {
+  fill(modoText ? rosaClaro : cinzaClaro);
+  stroke(cinzaEscuro);
+  strokeWeight(2);
+  ellipse(x, y, d, d);
+
+  fill(branco);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  text("T", x, y);
 }
 
 void mousePressed() {
   // Botões ON/OFF e DIG
   float distOnOff = dist(mouseX, mouseY, 715, 155);
   float distDig = dist(mouseX, mouseY, 715, 210);
+  float distText = dist(mouseX, mouseY, 715, 265 );
 
   if (distOnOff < 20) ligado = !ligado;
   if (distDig < 20) modoDig = !modoDig;
+  if(distText < 20) modoText = !modoText;
 
   // Posição central do trapézio branco
   float centerX = 400;     // centro aproximado da máquina
@@ -354,16 +373,16 @@ void drawKeyboard() {
 void drawKey(float x, float y, float d, String label, int index) {
   // muda de cor apenas se estiver sendo pressionada
   if (teclaPressionada && teclaAtiva == index) {
-    fill(rosaClaro);
-  } else {
     fill(cinzaClaro);
+  } else {
+    fill(brancoTeclado);
   }
 
   stroke(cinzaEscuro);
   strokeWeight(2);
   ellipse(x, y, d, d);
 
-  fill(branco);
+  fill(cinzaEscuro);
   noStroke();
   textAlign(CENTER, CENTER);
   textSize(14);
