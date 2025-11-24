@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 color azul = color(187, 211, 211);
 color lilas = color(193, 181, 207);
 color roxo = color(130, 112, 156);
@@ -24,7 +26,7 @@ int teclaAtiva = -1;
 //Configuração do teclado
 String[] linha1 = { "0","1","2","3","4","5","6","7","8","9" };
 String[] linha2 = { "Q","E","T","W","A","S","D","F","G","H" };
-  
+SoundFile somLigar;  
  
 
 void setup() {
@@ -40,6 +42,8 @@ void setup() {
     int idx = int(random(10));
     letters[idx] = 'W';
   }
+  somLigar = new SoundFile(this, "ligar.mp3");
+  
 }
 
 
@@ -121,15 +125,27 @@ void draw() {
   endShape(CLOSE);
 
   //Rosto
-  drawFace();
+  
+  if(ligado){
+    drawFace();
+  }else{
+     fill(detalhes);
+  rect(337, 330, 26, 4, 2);
+  rect(437, 330, 26, 4, 2);
+    fill(detalhes);
+  rectMode(CENTER);
+  rect(400, 375, 60, 4, 2);
+  rectMode(CORNER);
+  }
+   
 
   //Caixa de controle
   drawControlBox();
   
-drawKeyboard();
+//drawKeyboard();
 
 }
-/*
+
 void drawFace() {
   //Olhos
   noStroke();
@@ -155,8 +171,8 @@ void drawFace() {
   rect(400, 375, 60, 4, 2);
   rectMode(CORNER);
   
-}*/
-
+}
+/*
 void drawFace() {
   // Olhos
   noStroke();
@@ -203,7 +219,7 @@ void drawFace() {
   bezierVertex(408, 388, 392, 388, 378, 383);
   endShape(CLOSE);
 }
-
+*/
 
 
 
@@ -303,9 +319,18 @@ void mousePressed() {
   float distDig = dist(mouseX, mouseY, 715, 210);
   float distText = dist(mouseX, mouseY, 715, 265 );
 
-  if (distOnOff < 20) ligado = !ligado;
-  if (distDig < 20) modoDig = !modoDig;
-  if(distText < 20) modoText = !modoText;
+  if (distOnOff < 20){
+    ligado = !ligado;
+    somLigar.play();
+};
+  if (distDig < 20){
+    modoDig = !modoDig;
+    somLigar.play();
+  };
+  if(distText < 20) {
+    modoText = !modoText;
+    somLigar.play();
+  };
 
   // Posição central do trapézio branco
   float centerX = 400;     // centro aproximado da máquina
